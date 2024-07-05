@@ -1,5 +1,6 @@
 package com.backend.atexo.controller;
 
+import com.backend.atexo.model.CriteresNumerotation;
 import com.backend.atexo.model.Inscrit;
 import com.backend.atexo.service.InscritService;
 
@@ -17,10 +18,10 @@ public class InscritController {
     private InscritService inscritService;
 
     @PostMapping
-    public String creerInscrit(@RequestBody Inscrit inscrit) {
+    public String creerInscrit(@RequestBody Inscrit inscrit, @RequestBody CriteresNumerotation criteres) {
         logger.info(inscrit.toString());
         //logger.warn("A WARN Message");
         //logger.error("An ERROR Message");
-        return inscritService.genererNumero(inscrit);
+        return inscritService.genererNumero(inscrit, criteres);
     }
 }
