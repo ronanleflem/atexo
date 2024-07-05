@@ -32,6 +32,9 @@ public class InscritService {
                 .map(NumeroElement::getValeur)
                 .collect(Collectors.joining());
 
+        // Ajouter le numéro généré à l'inscrit
+        inscrit.setResultatGeneration(numero);
+
         // Sauvegarde de l'inscrit
         inscritRepository.save(inscrit);
 

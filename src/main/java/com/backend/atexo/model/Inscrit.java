@@ -16,7 +16,11 @@ public class Inscrit {
     private String prenom;
     private String dateNaissance;
     private Long compteur;
+    private String resultatGeneration;
 
+    public void setResultatGeneration(String resultatGeneration) {
+        this.resultatGeneration = resultatGeneration;
+    }
     @Override
     public String toString() {
         return "Inscrit{" +
