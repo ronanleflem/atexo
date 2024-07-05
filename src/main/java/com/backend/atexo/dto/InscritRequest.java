@@ -9,4 +9,11 @@ public class InscritRequest {
     private Inscrit inscrit;
     private CriteresNumerotation criteres;
 
+    @Override
+    public String toString() {
+        return "InscritRequest{" +
+                "inscrit=" + inscrit +
+                ", criteres=" + criteres +
+                '}';
+    }
 }

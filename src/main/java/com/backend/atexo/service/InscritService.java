@@ -32,15 +32,7 @@ public class InscritService {
                 .map(NumeroElement::getValeur)
                 .collect(Collectors.joining());
     }
-    public String genererNumero(Inscrit inscrit) {
-        // Create num
-        String numero = "";
 
-        // Save on database
-        inscritRepository.save(inscrit);
-
-        return numero;
-    }
     private NumeroElement creerNumeroElement(String valeur, Critere critere) {
         if (critere.getLongueur() > 0 && valeur.length() > critere.getLongueur()) {
             valeur = valeur.substring(0, critere.getLongueur());
