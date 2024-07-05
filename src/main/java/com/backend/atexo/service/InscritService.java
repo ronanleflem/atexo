@@ -26,11 +26,17 @@ public class InscritService {
         elements.add(creerNumeroElement(inscrit.getDateNaissance().replace("-", ""), criteres.getDateCritere()));
         elements.add(creerNumeroElement(String.valueOf(inscrit.getCompteur() + criteres.getCompteurCritere().getLongueur()), criteres.getCompteurCritere()));
 
-        // Tri des éléments selon l'ordre
-        return elements.stream()
+        // Tri des éléments
+        String numero = elements.stream()
                 .sorted(Comparator.comparingInt(NumeroElement::getOrdre))
                 .map(NumeroElement::getValeur)
                 .collect(Collectors.joining());
+
+        // Sauvegarde de l'inscrit
+        inscritRepository.save(inscrit);
+
+        // Renvoie du numéro encapsulé dans un objet JSON
+        return "{\"numero\": \"" + numero + "\"}";
     }
 
     private NumeroElement creerNumeroElement(String valeur, Critere critere) {
