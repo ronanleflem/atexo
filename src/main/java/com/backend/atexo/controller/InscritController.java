@@ -8,6 +8,8 @@ import com.backend.atexo.service.InscritService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -19,10 +21,8 @@ public class InscritController {
     private InscritService inscritService;
 
     @PostMapping
-    public String creerInscrit(@RequestBody InscritRequest inscritRequest) {
+    public ResponseEntity<String> creerInscrit(@RequestBody InscritRequest inscritRequest) {
         logger.info(inscritRequest.toString());
-        //logger.warn("A WARN Message");
-        //logger.error("An ERROR Message");
-        return inscritService.genererNumero(inscritRequest.getInscrit(), inscritRequest.getCriteres());
+        return new ResponseEntity<>(inscritService.genererNumero(inscritRequest.getInscrit(), inscritRequest.getCriteres()), HttpStatus.OK);
     }
 }
