@@ -10,10 +10,19 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.validation.annotation.Validated;
+
+import com.backend.atexo.exception.ValidationException;
+
+import javax.validation.Valid;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/inscrits")
+@Validated
 public class InscritController {
     Logger logger = LoggerFactory.getLogger(InscritController.class);
 
@@ -21,8 +30,15 @@ public class InscritController {
     private InscritService inscritService;
 
     @PostMapping
-    public ResponseEntity<String> creerInscrit(@RequestBody InscritRequest inscritRequest) {
-        logger.info(inscritRequest.toString());
+    public ResponseEntity<String> creerInscrit(@Valid @RequestBody InscritRequest inscritRequest, BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            Map<String, String> errors = new HashMap<>();
+            bindingResult.getFieldErrors().forEach(error ->
+                    errors.put(error.getField(), error.getDefaultMessage()));
+            throw new ValidationException(errors);
+        }
         return new ResponseEntity<>(inscritService.genererNumero(inscritRequest.getInscrit(), inscritRequest.getCriteres()), HttpStatus.OK);
     }
+
 }
