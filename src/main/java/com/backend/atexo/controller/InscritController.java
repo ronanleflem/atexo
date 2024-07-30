@@ -22,7 +22,6 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/inscrits")
-@Validated
 public class InscritController {
     Logger logger = LoggerFactory.getLogger(InscritController.class);
 
@@ -30,14 +29,16 @@ public class InscritController {
     private InscritService inscritService;
 
     @PostMapping
-    public ResponseEntity<String> creerInscrit(@Valid @RequestBody InscritRequest inscritRequest, BindingResult bindingResult) {
+    public ResponseEntity<String> creerInscrit(@Valid @RequestBody InscritRequest inscritRequest, BindingResult bindingResult){
 
         if (bindingResult.hasErrors()) {
+            logger.info("Binding error has occured !");
             Map<String, String> errors = new HashMap<>();
             bindingResult.getFieldErrors().forEach(error ->
                     errors.put(error.getField(), error.getDefaultMessage()));
             throw new ValidationException(errors);
         }
+        logger.info("HTTP REQUEST OK !");
         return new ResponseEntity<>(inscritService.genererNumero(inscritRequest.getInscrit(), inscritRequest.getCriteres()), HttpStatus.OK);
     }
 

@@ -5,12 +5,14 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Getter;
+import lombok.Setter;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
-@Getter
+@Getter @Setter
 public class Inscrit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,6 +20,7 @@ public class Inscrit {
 
     @NotNull(message = "Le nom ne peut pas être nul")
     @Size(min = 1, message = "Le nom doit avoir au moins 1 caractère")
+    @NotBlank(message = "Name is mandatory")
     private String nom;
 
     @NotNull(message = "Le prenom ne peut pas être nul")
@@ -45,4 +48,5 @@ public class Inscrit {
                 ", compteur=" + compteur +
                 '}';
     }
+
 }
